@@ -1,11 +1,10 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { VStack } from 'native-base'
 
 const Register = () => {
   return (
-    <View>
-      <Text>Register</Text>
-    </View>
+    <VStack flex={1} p={6} bg="gray.600">
+    </VStack>
   )
 }
 
