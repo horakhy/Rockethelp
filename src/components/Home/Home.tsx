@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SignOut } from "phosphor-react-native";
+import { ChatTeardropText, SignOut } from "phosphor-react-native";
 import {
   Heading,
   HStack,
@@ -8,21 +8,39 @@ import {
   useTheme,
   FlatList,
   VStack,
+  Center,
 } from "native-base";
 
 import Logo from "../../assets/logo_secondary.svg";
 import Filter from "../Filter/Filter";
 import Order, { OrderData } from "../Order/Order";
+import Button from "../buttons/Button";
 
 const Home = () => {
   const { colors } = useTheme();
-  const [statusSelected, setStatusSelected] = useState<"open" | "closed">("open");
-  const [orders, setOrders] = useState<OrderData[]>([{
-    id: '1',
-    patrimony: '1234',
-    date: '2020-01-01',
-    status: 'open',
-  }]);
+  const [statusSelected, setStatusSelected] = useState<"open" | "closed">(
+    "open"
+  );
+  const [orders, setOrders] = useState<OrderData[]>([
+    // {
+    //   id: "1",
+    //   patrimony: "1234",
+    //   date: "2020-01-01",
+    //   status: "open",
+    // },
+    // {
+    //   id: "2",
+    //   patrimony: "4321",
+    //   date: "2020-01-01",
+    //   status: "open",
+    // },
+    // {
+    //   id: "3",
+    //   patrimony: "2214",
+    //   date: "2020-01-01",
+    //   status: "open",
+    // },
+  ]);
 
   return (
     <VStack flex={1} pb={6} bg="gray.700">
@@ -66,7 +84,28 @@ const Home = () => {
             isActive={statusSelected === "closed"}
           />
         </HStack>
-        <FlatList data={orders} keyExtractor={item => item.id} renderItem={({ item }) => <Order data={item} />} />
+        <FlatList
+          data={orders}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Order data={item} />}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}
+          ListEmptyComponent={() => (
+            <Center>
+              <ChatTeardropText color={colors.gray[300]} size={40} />
+              <Text
+                color={colors.gray[300]}
+                fontSize="xl"
+                mt={6}
+                textAlign="center"
+              >
+                Você ainda não possui solicitações{" "}
+                {statusSelected === "open" ? "em andamento" : "finalizadas"}
+              </Text>
+            </Center>
+          )}
+        />
+        <Button title="Nova solicitação" />
       </VStack>
     </VStack>
   );
